@@ -9,7 +9,7 @@
 <style>
 :root{--bg:#FBFBF9;--surf:#FFFFFF;--tx:#1A1A1A;--mut:#6B6B6B;--ac:#D97706;--ac2:#059669;--hi:#7C3AED;--c2:#7C3AED;--code:#17171A;--bd:#E5E5E5;--sh:0 1px 3px rgba(0,0,0,.06);--shh:0 8px 24px rgba(0,0,0,.1);--ease:all .2s cubic-bezier(.4,0,.2,1);color-scheme:light}
 :root[data-theme=dark]{--bg:#0F0F0F;--surf:#1A1A1A;--tx:#F5F5F5;--mut:#A3A3A3;--ac:#FBBF24;--ac2:#34D399;--hi:#A78BFA;--c2:#A78BFA;--code:#0A0A0A;--bd:#2A2A2A;--sh:0 1px 3px rgba(0,0,0,.4);--shh:0 8px 24px rgba(0,0,0,.5);color-scheme:dark}
-*{box-sizing:border-box}html,body{height:100%;margin:0}
+*{box-sizing:border-box}html,body{height:100%;margin:0}html{overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}body{max-width:100vw}@supports(height:100dvh){html,body{height:100dvh}}
 body{background:var(--bg);color:var(--tx);font:16px/1.7 'Inter',system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden;padding-top:env(safe-area-inset-top,0)}
 [dir=rtl] body,[dir=rtl] button,[dir=rtl] input,[dir=rtl] textarea{font-family:'IBM Plex Sans Arabic','Cairo',sans-serif}
 code,pre,.mono,.fm,.ce,.out{font-family:'JetBrains Mono',ui-monospace,monospace}
@@ -18,7 +18,7 @@ button{font:inherit;color:inherit;cursor:pointer}:focus-visible{outline:2px soli
 header{display:flex;align-items:center;gap:10px;padding:10px 20px;background:var(--surf);border-bottom:1px solid var(--bd)}
 .logo{font-weight:700;font-size:1.15rem;letter-spacing:-.03em;margin-inline-end:12px;white-space:nowrap}.logo b{color:var(--ac)}
 .ib{background:var(--surf);border:1px solid var(--bd);border-radius:999px;min-width:38px;min-height:38px;padding:0 12px;transition:var(--ease)}.ib:hover{border-color:var(--ac);background:var(--bg)}
-#q{flex:1;max-width:420px;margin-inline:auto;padding:8px 16px;border:1px solid var(--bd);border-radius:999px;background:var(--bg);color:var(--tx);font:inherit;transition:var(--ease)}#q:focus{border-color:var(--ac);outline:0}
+#q{flex:1;min-width:0;max-width:420px;margin-inline:auto;padding:8px 16px;border:1px solid var(--bd);border-radius:999px;background:var(--bg);color:var(--tx);font:inherit;transition:var(--ease)}#q:focus{border-color:var(--ac);outline:0}
 #wrap{flex:1;display:flex;min-height:0}
 nav{width:288px;flex-shrink:0;overflow-y:auto;padding:16px 12px;border-inline-end:1px solid var(--bd);background:var(--surf)}
 nav .it{display:flex;align-items:center;gap:10px;width:100%;text-align:start;background:none;border:0;border-radius:10px;padding:8px 12px;transition:var(--ease);font-size:.93rem}
@@ -103,7 +103,7 @@ header .hm{font-size:.85rem;padding:0 10px}#pom.run{border-color:var(--ac2);colo
 .cpb{position:absolute;top:10px;inset-inline-end:10px;background:rgba(255,255,255,.1);border:0;color:#ddd;border-radius:8px;width:30px;height:30px;opacity:0;transition:var(--ease)}.fm{position:relative}.fm:hover .cpb{opacity:1}
 body.focus nav,body.focus #toc,body.focus footer{display:none}body.focus main{padding-inline:max(24px,calc((100% - 820px)/2))}body.focus main{grid-template-columns:minmax(0,1fr)}
 /* ===== overlays ===== */
-#pal,.ov{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);display:flex;justify-content:center;align-items:flex-start;padding-top:12vh;animation:fadeInUp .2s both}
+#pal,.ov{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.45);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);display:flex;justify-content:center;align-items:flex-start;padding-top:12vh;animation:fadeInUp .2s both}
 .pb{width:min(640px,92vw);background:var(--surf);border:1px solid var(--bd);border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,.35);padding:16px;max-height:76vh;overflow:auto}
 #pi{width:100%;padding:12px 16px;border:1px solid var(--bd);border-radius:12px;background:var(--bg);color:var(--tx);font:inherit;font-size:1.05rem}#pi:focus{outline:0;border-color:var(--ac)}
 #pal .chips{margin:12px 0 8px}.pill.on{background:var(--ac);border-color:var(--ac);color:#fff}:root[data-theme=dark] .pill.on{color:#0F0F0F}
@@ -201,6 +201,7 @@ body.focus #sb{display:none}@media print{#sb{display:none}}
 .cts{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))!important}
 
 .src{color:var(--mut);font-size:.82rem;border-top:1px dashed var(--bd);padding-top:8px;margin-top:20px}
+@media(max-width:800px){header>*{min-width:0}.logo{margin-inline-end:0;font-size:1rem}header .ib{flex:none}#q{padding:8px 12px}#onb .pb{max-width:100%}}@media(max-width:420px){.logo{display:none}}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 </head>
@@ -708,7 +709,7 @@ setTheme(store.get("theme","dark"));
 setLang(store.get("lang","en"));
 
 // ===== v2: animated background =====
-(function(){const cv=document.getElementById("bgfx"),cx=cv.getContext("2d");let W,H,D=Math.min(devicePixelRatio||1,2),N=[],G=[],off=0;
+(function(){const cv=document.getElementById("bgfx"),cx=cv.getContext("2d");if(!cx)return;let W,H,D=Math.min(devicePixelRatio||1,2),N=[],G=[],off=0;
 const rm=matchMedia("(prefers-reduced-motion:reduce)").matches;
 const SN=["import numpy as np","model.fit(X, y)","y = w*x + b","σ(z) = 1/(1+e^-z)","for i in range(n):","def train(X, y):","loss.backward()","print(f'Accuracy: {acc}')","[[1 0],[0 1]] · x","f(x) = wᵀx + b"],SY=["σ","Σ","∂","∇","∫","λ","θ","μ","π"];
 function size(){W=innerWidth;H=innerHeight;cv.width=W*D;cv.height=H*D;cx.setTransform(D,0,0,D,0,0);
